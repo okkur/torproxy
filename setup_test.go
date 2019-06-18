@@ -19,8 +19,7 @@ func Test_parse(t *testing.T) {
 			torproxy from.com to.onion
 			`,
 			Config{
-				From: []string{"from.com"},
-				To:   []string{"to.onion"},
+				To: map[string]string{"from.com": "to.onion"},
 			},
 		},
 		{
@@ -29,8 +28,7 @@ func Test_parse(t *testing.T) {
 			torproxy from2.com to2.onion
 			`,
 			Config{
-				From: []string{"from.com", "from2.com"},
-				To:   []string{"to.onion", "to2.onion"},
+				To: map[string]string{"from.com": "to.onion", "from2.com": "to2.onion"},
 			},
 		},
 	}
@@ -41,17 +39,9 @@ func Test_parse(t *testing.T) {
 			t.Error(err)
 		}
 
-		// Check Config.From
-		for i, from := range test.config.From {
-			if config.From[i] != from {
-				t.Errorf("Expected %v, Got %v", test.config.From, config.From)
-			}
-		}
-
-		// Check Config.To
-		for i, to := range test.config.To {
-			if config.To[i] != to {
-				t.Errorf("Expected %v, Got %v", test.config.To, config.To)
+		for from, to := range config.To {
+			if test.config.To[from] != to {
+				t.Errorf("Expected %+v, Got %+v", test.config.To, config.To)
 			}
 		}
 	}

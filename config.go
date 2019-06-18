@@ -12,8 +12,8 @@ import (
 
 // TorProxy config
 type Config struct {
-	From []string
-	To   []string
+	To     map[string]string
+	Client *Tor
 }
 
 // Tor instance config struct

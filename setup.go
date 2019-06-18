@@ -26,6 +26,7 @@ func init() {
 
 func parse(c *caddy.Controller) (Config, error) {
 	var config Config
+	to := make(map[string]string)
 
 	for c.Next() {
 		if c.Val() == "torproxy" {
@@ -43,10 +44,10 @@ func parse(c *caddy.Controller) (Config, error) {
 		}
 
 		// Fill the config instance
-		config.From = append(config.From, fromURI.String())
-		config.To = append(config.To, toURI.String())
+		to[fromURI.String()] = toURI.String()
 	}
 
+	config.To = to
 	return config, nil
 }
 
