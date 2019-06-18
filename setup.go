@@ -3,6 +3,7 @@ package torproxy
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/mholt/caddy"
 	"github.com/mholt/caddy/caddy/caddymain"
@@ -23,7 +24,31 @@ func init() {
 	httpserver.RegisterDevDirective("torproxy", "")
 }
 
-func parse(c *caddy.Controller) (Config, error) { return Config{}, nil }
+func parse(c *caddy.Controller) (Config, error) {
+	var config Config
+
+	for c.Next() {
+		if c.Val() == "torproxy" {
+			c.Next() // skip directive name
+		}
+
+		// Parse the Config.From and Config.To URIs
+		fromURI, err := url.Parse(c.Val())
+		if err != nil {
+			return Config{}, fmt.Errorf("Couldn't parse the `from` URI %s", err.Error())
+		}
+		toURI, err := url.Parse(c.RemainingArgs()[0])
+		if err != nil {
+			return Config{}, fmt.Errorf("Couldn't parse the `from` URI: %s", err.Error())
+		}
+
+		// Fill the config instance
+		config.From = append(config.From, fromURI.String())
+		config.To = append(config.To, toURI.String())
+	}
+
+	return config, nil
+}
 
 func setup(c *caddy.Controller) error {
 	config, err := parse(c)

@@ -1,3 +1,6 @@
 package torproxy
 
-type Config struct{}
+type Config struct {
+	From []string
+	To   []string
+}
