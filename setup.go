@@ -80,7 +80,7 @@ type TorProxy struct {
 }
 
 func (rd TorProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, error) {
-	if err := fmt.Errorf("Hello World"); err != nil {
+	if err := rd.Config.Proxy(w, r); err != nil {
 		if err.Error() == "option disabled" {
 			return rd.Next.ServeHTTP(w, r)
 		}
