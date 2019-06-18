@@ -2,7 +2,6 @@ package torproxy
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 
@@ -13,7 +12,7 @@ import (
 // Proxy redirects the request to the local onion serivce and the actual proxying
 // happens inside onion service's http handler
 func (c Config) Proxy(w http.ResponseWriter, r *http.Request) error {
-	u, err := url.Parse(c.To[r.URL.Host])
+	u, err := url.Parse(c.To[r.Host])
 	if err != nil {
 		return err
 	}
@@ -24,7 +23,7 @@ func (c Config) Proxy(w http.ResponseWriter, r *http.Request) error {
 	// Create a socks5 dialer
 	dialer, err := proxy.SOCKS5("tcp", fmt.Sprintf("127.0.0.1:%d", c.Client.Port), nil, proxy.Direct)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("Couldn't connect to socks proxy: %s", err.Error())
 	}
 
 	reverseProxy := cproxy.NewSingleHostReverseProxy(u, "", torProxyKeepalive, torProxyTimeout, torFallbackDelay)

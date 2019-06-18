@@ -26,6 +26,7 @@ func init() {
 
 func parse(c *caddy.Controller) (Config, error) {
 	var config Config
+	var client Tor
 	to := make(map[string]string)
 
 	for c.Next() {
@@ -43,11 +44,17 @@ func parse(c *caddy.Controller) (Config, error) {
 			return Config{}, fmt.Errorf("Couldn't parse the `from` URI: %s", err.Error())
 		}
 
+		if toURI.Scheme == "" {
+			toURI.Scheme = "http://"
+		}
+
 		// Fill the config instance
 		to[fromURI.String()] = toURI.String()
 	}
 
 	config.To = to
+	config.Client = &client
+	config.Client.SetDefaults()
 	return config, nil
 }
 
@@ -67,8 +74,10 @@ func setup(c *caddy.Controller) error {
 	}
 	cfg.AddMiddleware(mid)
 
+	config.Client.Start(c)
+
 	c.OnShutdown(func() error {
-		return nil
+		return config.Client.Stop()
 	})
 
 	return nil
