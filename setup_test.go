@@ -19,7 +19,7 @@ func Test_parse(t *testing.T) {
 			torproxy from.com to.onion
 			`,
 			Config{
-				To: map[string]string{"from.com": "to.onion"},
+				To: map[string]string{"from.com": "http://to.onion"},
 			},
 		},
 		{
@@ -28,7 +28,7 @@ func Test_parse(t *testing.T) {
 			torproxy from2.com to2.onion
 			`,
 			Config{
-				To: map[string]string{"from.com": "to.onion", "from2.com": "to2.onion"},
+				To: map[string]string{"from.com": "http://to.onion", "from2.com": "http://to2.onion"},
 			},
 		},
 	}

@@ -45,7 +45,7 @@ func parse(c *caddy.Controller) (Config, error) {
 		}
 
 		if toURI.Scheme == "" {
-			toURI.Scheme = "http://"
+			toURI.Scheme = "http"
 		}
 
 		// Fill the config instance
