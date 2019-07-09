@@ -27,13 +27,7 @@ func (t *Tor) Start(c *caddy.Controller) {
 		debugger = os.Stdout
 	}
 
-	torInstance, err := tor.Start(nil, &tor.StartConf{
-		NoAutoSocksPort: true,
-		ExtraArgs:       []string{"--SocksPort", strconv.Itoa(t.Port)},
-		TempDataDirBase: t.DataDir,
-		TorrcFile:       t.Torrc,
-		DebugWriter:     debugger,
-	})
+	torInstance, err := tor.Start(nil, t.starterConfig(debugger))
 	if err != nil {
 		log.Panicf("Unable to start Tor: %v", err)
 	}
@@ -56,4 +50,19 @@ func (t *Tor) Stop() error {
 	}
 	t.onion.Close()
 	return nil
+}
+
+func (t *Tor) starterConfig(debugger io.Writer) *tor.StartConf {
+	config := &tor.StartConf{
+		NoAutoSocksPort: true,
+		ExtraArgs:       []string{"--SocksPort", strconv.Itoa(t.Port)},
+		TempDataDirBase: t.DataDir,
+		TorrcFile:       t.Torrc,
+	}
+
+	if debugger != nil {
+		config.DebugWriter = debugger
+	}
+
+	return config
 }
