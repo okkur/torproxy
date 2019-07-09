@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/url"
 
-	cproxy "github.com/mholt/caddy/caddyhttp/proxy"
+	cproxy "github.com/caddyserver/caddy/caddyhttp/proxy"
 	"golang.org/x/net/proxy"
 )
 

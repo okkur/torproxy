@@ -3,7 +3,7 @@ package torproxy
 import (
 	"testing"
 
-	"github.com/mholt/caddy"
+	"github.com/caddyserver/caddy"
 )
 
 func Test_parse(t *testing.T) {

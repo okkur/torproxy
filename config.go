@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/cretz/bine/tor"
-	"github.com/mholt/caddy"
+	"github.com/caddyserver/caddy"
 )
 
 // TorProxy config

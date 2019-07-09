@@ -9,7 +9,7 @@ import (
 	"strconv"
 
 	"github.com/cretz/bine/tor"
-	"github.com/mholt/caddy"
+	"github.com/caddyserver/caddy"
 	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
 
