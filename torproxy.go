@@ -9,7 +9,7 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-// Proxy redirects the request to the local onion serivce and the actual proxying
+// Proxy redirects the request to the local onion service and the actual proxying
 // happens inside onion service's http handler
 func (c Config) Proxy(w http.ResponseWriter, r *http.Request) error {
 	u, err := url.Parse(c.To[r.Host])
