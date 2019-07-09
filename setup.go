@@ -1,9 +1,13 @@
 package torproxy
 
 import (
+	"bytes"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
+	"os"
+	"os/exec"
 
 	"github.com/caddyserver/caddy"
 	"github.com/caddyserver/caddy/caddy/caddymain"
@@ -59,6 +63,11 @@ func parse(c *caddy.Controller) (Config, error) {
 }
 
 func setup(c *caddy.Controller) error {
+	if err := isTorInstalled(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
 	config, err := parse(c)
 	if err != nil {
 		return err
@@ -97,4 +106,27 @@ func (rd TorProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, error
 	}
 
 	return 0, nil
+}
+
+func isTorInstalled() error {
+	// Setup and run the "tor --version" command
+	cmd := exec.Command("tor", "--version")
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := cmd.Start(); err != nil {
+		log.Fatal(err)
+	}
+
+	// Read the output into buffer
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(stdout)
+
+	// Check if the output contains Tor's version
+	if buf.String()[0:3] != "Tor" {
+		return fmt.Errorf("Tor is not installed on you machine.Please follow these instructions to install Tor: https://www.torproject.org/download/")
+	}
+
+	return nil
 }
