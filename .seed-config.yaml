@@ -1,0 +1,96 @@
+project:
+  name: "Torproxy"
+  oneLiner: "An easy way to proxy your http requests through the onion network"
+  state: "beta"
+  image: ""
+  website: "https://torproxy.okkur.org"
+  description: |
+    Route your http requests through the onion network without Tor browser
+  version: "v0.4.1"
+
+vision:
+  type: "community"
+  overview: |
+    Providing a fast and simple way to proxy your http requests through the onion network
+  items:
+    - "Simple and minimal config"
+    - "Proxy multiple hosts to a single endpoint"
+  concept: "Torproxy's core concept is to provide a simple way to proxy your http requsts using Caddy without needing to write complex logics and config"
+  aim: "Our aim is to provide a secure and easy way to access onion network on any device."
+
+contributionLinks:
+  issueTemplate: "/.github/ISSUE_TEMPLATE.md"
+  starterIssues: "https://github.com/okkur/torproxy/labels/starter%20issue"
+
+supportLinks:
+  documentation: "/docs"
+
+readme:
+  usageExample: |
+
+    First you need to install the Tor on your machine. Check this page to download and learn how to install Tor: [Download Tor](https://www.torproject.org/download/)
+
+    Then install the torproxy using `go get`:
+    ```
+    go get github.com/okkur/torproxy/cmd/torproxy
+    ```
+
+    Create a config file like the below example:
+    ```
+    example.test {
+      torproxy example.test somewhereonthe.onion 
+    }
+    ```
+
+    Then run torproxy using this command:
+    ```
+    torproxy -conf tor.test
+    ```
+
+docs:
+  development: |
+    Run the following command to get torproxy's source code and switch your working directory to the torproxy repository
+    ```
+    git clone github.com/okkur/torproxy && cd torproxy
+    ```
+
+    Then run the following command to download the dependencies to your local cache
+    ```
+    go mod download
+    ```
+
+    Do not forget to install the Tor itself on your machine too since torproxy needs that to operate correctly.
+
+emails:
+  commercialSupport: "support@okkur.org"
+  security: "security@okkur.org"
+  coc: "coc@okkur.org"
+
+copyright:
+  owner: "The Torproxy authors"
+  year: "2019"
+
+cla:
+  copyrightHolder: "nzt.ventures GmbH"
+  mail: "legal@nzt.ventures"
+
+maintainers:
+  - name: "Michael Grosser"
+    nick: "stp-ip"
+
+repo:
+  link: "https://torproxy.okkur.org/code"
+  type: "Github"
+
+badges:
+  - image: "https://img.shields.io/badge/state-beta-blue.svg"
+    alt: "state"
+  - image: "https://img.shields.io/github/release/okkur/torproxy.svg"
+    link: "https://github.com/okkur/torproxy/releases"
+    alt: "release"
+  - image: "https://img.shields.io/github/license/okkur/torproxy.svg"
+    link: "LICENSE"
+    alt: "license"
+
+reposeed:
+  configVersion: "v1"
