@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/caddyserver/caddy/caddy/caddymain"
-	_ "github.com/okkur/torproxy"
+	_ "go.okkur.org/torproxy"
 )
 
 func main() {
