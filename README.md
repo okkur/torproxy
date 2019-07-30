@@ -10,7 +10,7 @@ Route your http requests through the onion network without Tor browser
 
 ## Using Torproxy
 
-First you need to install the Tor on your machine. Check this page to download and learn how to install Tor: [Download Tor](https://www.torproject.org/download/)
+First you need to install Tor on your machine. Take a look at the [Tor download instructions](https://www.torproject.org/download/)
 
 You can get torproxy as a plugin on caddy's [build server](https://caddyserver.com/download).
 
