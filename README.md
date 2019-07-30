@@ -12,19 +12,21 @@ Route your http requests through the onion network without Tor browser
 
 First you need to install the Tor on your machine. Check this page to download and learn how to install Tor: [Download Tor](https://www.torproject.org/download/)
 
-Then install the torproxy using `go get`:
+You can get torproxy as a plugin on caddy's [build server](https://caddyserver.com/download).
+
+Or install torproxy using `go get`.
 ```
-go get github.com/okkur/torproxy/cmd/torproxy
+go get -u go.okkur.org/torproxy/cmd/torproxy
 ```
 
-Create a config file like the below example:
+Create a config file.
 ```
 example.test {
   torproxy example.test somewhereonthe.onion 
 }
 ```
 
-Then run torproxy using this command:
+Now you can run torproxy.
 ```
 torproxy -conf tor.test
 ```
