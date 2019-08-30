@@ -45,10 +45,15 @@ func (c Config) Proxy(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// If the received response is a redirect, proxy the request to the response's Location header
-	if tmpResponse.status == http.StatusFound || tmpResponse.status == http.StatusMovedPermanently {
-		if err = tmpResponse.Redirect(); err != nil {
-			return fmt.Errorf("[torproxy]: Couldn't redirect the request to the response's \"Location\" header: %s", err)
+	// Do this until the final response isn't a redirect response
+	for {
+		if tmpResponse.status == http.StatusFound || tmpResponse.status == http.StatusMovedPermanently {
+			if err = tmpResponse.Redirect(); err != nil {
+				return fmt.Errorf("[torproxy]: Couldn't redirect the request to the response's \"Location\" header: %s", err)
+			}
+			continue
 		}
+		break
 	}
 
 	// Decompress the body based on "Content-Encoding" header and write to a writer buffer
