@@ -6,6 +6,8 @@ import (
 	"io"
 	"net/http"
 	"sync"
+
+	"golang.org/x/net/proxy"
 )
 
 type TorResponse struct {
@@ -14,6 +16,9 @@ type TorResponse struct {
 	bodyReader bytes.Buffer
 	bodyWriter bytes.Buffer
 	status     int
+
+	request *http.Request
+	dialer  proxy.Dialer
 }
 
 var bufferPool = sync.Pool{New: createBuffer}

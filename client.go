@@ -46,7 +46,7 @@ func (t *Tor) Start(c *caddy.Controller) {
 // Stop stops the tor instance, context listener and the onion service
 func (t *Tor) Stop() error {
 	if err := t.instance.Close(); err != nil {
-		return fmt.Errorf("[txtdirect]: Couldn't close the tor instance. %s", err.Error())
+		return fmt.Errorf("[torproxy]: Couldn't close the tor instance. %s", err.Error())
 	}
 	t.onion.Close()
 	return nil
