@@ -16,7 +16,7 @@ You can get torproxy as a plugin on caddy's [build server](https://caddyserver.c
 
 Or install torproxy using `go get`.
 ```
-go get -u go.okkur.org/torproxy/cmd/torproxy
+go get go.okkur.org/torproxy/cmd/torproxy
 ```
 
 Create a config file.
