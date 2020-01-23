@@ -27,7 +27,6 @@ supportLinks:
 
 readme:
   usageExample: |
-
     First you need to install Tor on your machine. Take a look at the [Tor download instructions](https://www.torproject.org/download/)
 
     You can get torproxy as a plugin on caddy's [build server](https://caddyserver.com/download).
@@ -88,7 +87,7 @@ badges:
   - image: "https://img.shields.io/badge/state-beta-blue.svg"
     alt: "state"
   - image: "https://img.shields.io/github/release/okkur/torproxy.svg"
-    link: "https://github.com/okkur/torproxy/releases"
+    link: "https://torproxy.okkur.org/releases/"
     alt: "release"
   - image: "https://img.shields.io/github/license/okkur/torproxy.svg"
     link: "LICENSE"
