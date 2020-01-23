@@ -18,12 +18,13 @@ Run the following command to get torproxy's source code and switch your working 
 git clone github.com/okkur/torproxy && cd torproxy
 ```
 
-Then run the following command to download the dependencies to your local cache
+Then run the following command to build torproxy
 ```
-go mod download
+make build
 ```
 
 Do not forget to install Tor itself on your machine since torproxy needs that to operate correctly.
+
 # Documentation
 
 No documentation available yet. Start your first contribution with some documentation.
