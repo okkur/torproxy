@@ -2,7 +2,7 @@
 
 An easy way to proxy your http requests through the onion network
 
- [![state](https://img.shields.io/badge/state-beta-blue.svg)]() [![release](https://img.shields.io/github/release/okkur/torproxy.svg)](https://github.com/okkur/torproxy/releases) [![license](https://img.shields.io/github/license/okkur/torproxy.svg)](LICENSE)
+ [![state](https://img.shields.io/badge/state-beta-blue.svg)]() [![release](https://img.shields.io/github/release/okkur/torproxy.svg)](https://torproxy.okkur.org/releases/) [![license](https://img.shields.io/github/license/okkur/torproxy.svg)](LICENSE)
 
 **NOTE: This is a beta release, we do not consider it completely production ready yet. Use at your own risk.**
 
@@ -30,7 +30,7 @@ Now you can run torproxy.
 ```
 torproxy -conf tor.test
 ```
-Take a look at our full [documentation](/docs).
+Take a look at our full [documentation](https://torproxy.okkur.org/docs).
 
 ## Support
 For detailed information on support options see our [support guide](/SUPPORT.md).

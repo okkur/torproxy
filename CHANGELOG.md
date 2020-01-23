@@ -6,7 +6,7 @@ _2017_
   - [Documentation for v0.3.0](#documentation-for-v030)
 
 ## Documentation for v0.3.0
-[Documentation](/tree/v0.3.0/docs)
+[Documentation](https://torproxy.okkur.org/docs/)
 
 ## Changes since v0.2.0
 
@@ -18,12 +18,12 @@ _2017_
 
 # v0.2.1
 _2020-01-23_
-  - [Downloads for v0.2.1](https://github.com/okkur/torproxy/releases/tag/v0.2.1)
+  - [Downloads for v0.2.1](https://torproxy.okkur.org/releases/v0.2.1)
   - [Changelog since v0.2.0](#changes-since-v020)
   - [Documentation for v0.2.1](#documentation-for-v021)
 
 ## Documentation for v0.2.1
-[Documentation](/docs)
+[Documentation](https://torproxy.okkur.org/docs/)
 
 
 ## Changes since v0.2.0
@@ -35,12 +35,12 @@ _2020-01-23_
 
 # v0.2.0
 _2019-07-30_
-  - [Downloads for v0.2.0](https://github.com/okkur/torproxy/releases/tag/v0.2.0)
+  - [Downloads for v0.2.0](https://torproxy.okkur.org/releases/v0.2.0)
   - [Changelog since v0.1.0](#changes-since-v010)
   - [Documentation for v0.2.0](#documentation-for-v020)
 
 ## Documentation for v0.2.0
-[Documentation](/docs)
+[Documentation](https://torproxy.okkur.org/docs/)
 
 
 ## Changes since v0.1.0
@@ -51,12 +51,12 @@ _2019-07-30_
 
 # v0.1.0
 _2019-07-10_
-  - [Downloads for v0.1.0](https://github.com/okkur/torproxy/releases/tag/v0.1.0)
+  - [Downloads for v0.1.0](https://torproxy.okkur.org/releases/v0.1.0)
   - [Changelog since v0.0.0](#changes-since-v000)
   - [Documentation for v0.1.0](#documentation-for-v010)
 
 ## Documentation for v0.1.0
-[Documentation](/docs)
+[Documentation](https://torproxy.okkur.org/docs/)
 
 
 ## Changes since v0.0.0
