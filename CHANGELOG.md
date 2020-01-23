@@ -15,6 +15,24 @@ _2017_
 ---
 
 -->
+
+# v0.2.1
+_2020-01-23_
+  - [Downloads for v0.2.1](https://github.com/okkur/torproxy/releases/tag/v0.2.1)
+  - [Changelog since v0.2.0](#changes-since-v020)
+  - [Documentation for v0.2.1](#documentation-for-v021)
+
+## Documentation for v0.2.1
+[Documentation](/docs)
+
+
+## Changes since v0.2.0
+  - Branch off Caddy v1 support
+  - Update deps
+  - Add makefile
+
+---
+
 # v0.2.0
 _2019-07-30_
   - [Downloads for v0.2.0](https://github.com/okkur/torproxy/releases/tag/v0.2.0)
@@ -22,7 +40,7 @@ _2019-07-30_
   - [Documentation for v0.2.0](#documentation-for-v020)
 
 ## Documentation for v0.2.0
-[Documentation](/tree/v0.2.0/docs)
+[Documentation](/docs)
 
 
 ## Changes since v0.1.0
@@ -38,7 +56,7 @@ _2019-07-10_
   - [Documentation for v0.1.0](#documentation-for-v010)
 
 ## Documentation for v0.1.0
-[Documentation](/tree/v0.1.0/docs)
+[Documentation](/docs)
 
 
 ## Changes since v0.0.0
