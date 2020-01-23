@@ -6,7 +6,7 @@ project:
   website: "https://torproxy.okkur.org"
   description: |
     Route your http requests through the onion network without Tor browser
-  version: "v0.2.0"
+  version: "v0.2.1"
 
 vision:
   type: "community"
@@ -34,7 +34,7 @@ readme:
 
     Or install torproxy using `go get`.
     ```
-    go get -u go.okkur.org/torproxy/cmd/torproxy
+    go get go.okkur.org/torproxy/cmd/torproxy
     ```
 
     Create a config file.
@@ -56,9 +56,9 @@ docs:
     git clone github.com/okkur/torproxy && cd torproxy
     ```
 
-    Then run the following command to download the dependencies to your local cache
+    Then run the following command to build torproxy
     ```
-    go mod download
+    make build
     ```
 
     Do not forget to install Tor itself on your machine since torproxy needs that to operate correctly.
