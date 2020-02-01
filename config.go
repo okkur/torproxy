@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cretz/bine/tor"
 	"github.com/caddyserver/caddy"
+	"github.com/cretz/bine/tor"
 )
 
 // TorProxy config

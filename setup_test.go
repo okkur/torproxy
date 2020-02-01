@@ -1,15 +1,13 @@
 package torproxy
 
 import (
+	"bytes"
 	"testing"
 
-	"github.com/caddyserver/caddy"
+	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
 )
 
 func Test_parse(t *testing.T) {
-	type args struct {
-		c *caddy.Controller
-	}
 	tests := []struct {
 		configFile string
 		config     Config
@@ -33,15 +31,30 @@ func Test_parse(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		c := caddy.NewTestController("http", test.configFile)
-		config, err := parse(c)
+		buf := bytes.NewBuffer([]byte(test.configFile))
+		block, err := caddyfile.Parse("Caddyfile", buf)
 		if err != nil {
-			t.Error(err)
+			t.Errorf("Couldn't read the config: %s", err.Error())
 		}
 
-		for from, to := range config.To {
+		// Extract the config tokens from the server blocks
+		var tokens []caddyfile.Token
+		for _, segment := range block[0].Segments {
+			for _, token := range segment {
+				tokens = append(tokens, token)
+			}
+		}
+
+		d := caddyfile.NewDispenser(tokens)
+		g := &TorProxy{}
+
+		if err := g.UnmarshalCaddyfile(d); err != nil {
+			t.Errorf("Couldn't parse the config: %s", err.Error())
+		}
+
+		for from, to := range g.Config.To {
 			if test.config.To[from] != to {
-				t.Errorf("Expected %+v, Got %+v", test.config.To, config.To)
+				t.Errorf("Expected %+v, Got %+v", test.config.To, g.Config.To)
 			}
 		}
 	}
