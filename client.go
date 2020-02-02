@@ -9,11 +9,10 @@ import (
 	"strconv"
 
 	"github.com/cretz/bine/tor"
-	"github.com/caddyserver/caddy"
 	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
 
-func (t *Tor) Start(c *caddy.Controller) {
+func (t *Tor) Start() {
 	var debugger io.Writer
 	if t.DebugMode {
 		if t.LogFile != "" {
