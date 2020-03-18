@@ -1,11 +1,10 @@
 package main
 
 import (
-	"github.com/caddyserver/caddy/caddy/caddymain"
+	caddycmd "github.com/caddyserver/caddy/v2/cmd"
 	_ "go.okkur.org/torproxy"
 )
 
 func main() {
-	caddymain.EnableTelemetry = false
-	caddymain.Run()
+	caddycmd.Main()
 }
