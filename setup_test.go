@@ -39,6 +39,7 @@ func Test_parse(t *testing.T) {
 			Config{
 				To: map[string]string{"from.com": "http://to.onion", "from2.com": "http://to2.onion"},
 				Client: &Tor{
+					Host: "127.0.0.1",
 					Port: 4200,
 				},
 			},

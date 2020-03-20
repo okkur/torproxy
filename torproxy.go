@@ -33,7 +33,7 @@ func (c Config) Proxy(w http.ResponseWriter, r *http.Request) error {
 	r.Host = u.Host
 
 	// Create a socks5 dialer
-	dialer, err := proxy.SOCKS5("tcp", fmt.Sprintf("127.0.0.1:%d", c.Client.Port), nil, proxy.Direct)
+	dialer, err := proxy.SOCKS5("tcp", fmt.Sprintf("%s:%d", c.Client.Host, c.Client.Port), nil, proxy.Direct)
 	if err != nil {
 		return fmt.Errorf("Couldn't connect to socks proxy: %s", err.Error())
 	}

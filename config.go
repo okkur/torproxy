@@ -99,6 +99,10 @@ func (t *Tor) SetDefaults() {
 		t.debugger = os.Stdout
 	}
 
+	if t.Host == "" {
+		t.Host = "127.0.0.1"
+	}
+
 	if t.Port == 0 {
 		t.Port = DefaultOnionServicePort
 	}
