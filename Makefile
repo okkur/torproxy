@@ -26,11 +26,11 @@ docker-run: image-build
 
 docker-test:
 	docker run --network=host -v $(shell pwd):/source -v $(GOPATH)/pkg/mod:/go/pkg/mod golang:1.13-alpine /bin/sh \
-	-c "cd /source && apk add git gcc musl-dev make && GOROOT=\"/usr/local/go\" make test"
+	-c "cd /source && apk add tor git gcc musl-dev make && GOROOT=\"/usr/local/go\" make test"
 
 docker-build:
 	docker run --network=host -v $(shell pwd):/source -v $(GOPATH)/pkg/mod:/go/pkg/mod golang:1.13-alpine /bin/sh \
-	-c "cd /source && apk add git gcc musl-dev make && make build"
+	-c "cd /source && apk add tor git gcc musl-dev make && make build"
 
 version:
 	@echo $(VERSION)
