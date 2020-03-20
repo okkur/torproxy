@@ -5,28 +5,13 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"os"
 	"strconv"
 
 	"github.com/cretz/bine/tor"
-	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
 
 func (t *Tor) Start() {
-	var debugger io.Writer
-	if t.DebugMode {
-		if t.LogFile != "" {
-			debugger = &lumberjack.Logger{
-				Filename:   t.LogFile,
-				MaxSize:    100,
-				MaxAge:     14,
-				MaxBackups: 10,
-			}
-		}
-		debugger = os.Stdout
-	}
-
-	torInstance, err := tor.Start(nil, t.starterConfig(debugger))
+	torInstance, err := tor.Start(nil, t.starterConfig(t.debugger))
 	if err != nil {
 		log.Panicf("Unable to start Tor: %v", err)
 	}
