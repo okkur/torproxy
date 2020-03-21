@@ -27,7 +27,11 @@ supportLinks:
 
 readme:
   usageExample: |
-    First you need to install Tor on your machine. Take a look at the [Tor download instructions](https://www.torproject.org/download/)
+    Note: The `master` branch is using [Caddy v2](https://caddyserver.com/), if you
+    want to use Torproxy with previous caddy versions, check the `caddy-v1` branch.
+
+    If you want Torproxy to start a fresh instance of Tor, you need to install Tor
+    on your machine. Take a look at the [Tor download instructions](https://www.torproject.org/download/)
 
     You can get torproxy as a plugin on caddy's [build server](https://caddyserver.com/download).
 
@@ -36,7 +40,8 @@ readme:
     go get go.okkur.org/torproxy/cmd/torproxy
     ```
 
-    Create a config file.
+    Create a config file like the example below. For more information about the
+    available config options, check the [Configuration](/docs/configuration.md) page.
     ```
     example.test {
       torproxy example.test somewhereonthe.onion 
@@ -61,7 +66,6 @@ docs:
     ```
 
     Do not forget to install Tor itself on your machine since torproxy needs that to operate correctly.
-    
 
 emails:
   commercialSupport: "support@okkur.org"
