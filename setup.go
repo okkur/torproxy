@@ -29,9 +29,22 @@ func (t *TorProxy) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 	var client Tor
 	to := make(map[string]string)
 
+config_handler:
 	for d.Next() {
 		if d.Val() == "torproxy" {
 			d.Next() // skip directive name
+		}
+
+		// Parse the Tor client's config
+		if d.Val() == "{" {
+			for d.Next() {
+				if d.Val() == "}" {
+					continue config_handler
+				}
+				if err := client.ParseTor(d); err != nil {
+					return fmt.Errorf("Couldn't parse the Tor client config: %s", err.Error())
+				}
+			}
 		}
 
 		// Parse the Config.From and Config.To URIs
@@ -55,27 +68,31 @@ func (t *TorProxy) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 	config.To = to
 	config.Client = &client
 	config.Client.SetDefaults()
+	t.Config = config
 
-	config.Client.Start()
+	if t.Config.Client.Host == "" && !t.testing {
+		t.Config.Client.Start()
+	}
 
 	return nil
 }
 
 // CaddyModule returns the Caddy module information.
 func (TorProxy) CaddyModule() caddy.ModuleInfo {
-	t := new(TorProxy)
+	t := TorProxy{Config: Config{Client: &Tor{}}}
 
 	pool := caddy.NewUsagePool()
 	pool.LoadOrNew("torclient", TorConstructor)
 
-	if err := t.Config.Client.IsInstalled(); err != nil {
-		log.Fatalf(err.Error())
+	if t.Config.Client.Host == "" && !t.testing {
+		if err := t.Config.Client.IsInstalled(); err != nil {
+			log.Fatalf(err.Error())
+		}
 	}
 
 	return caddy.ModuleInfo{
 		Name: "http.handlers.torproxy",
 		New: func() caddy.Module {
-			t.Config.Client.Start()
 			return t
 		},
 	}
@@ -83,6 +100,8 @@ func (TorProxy) CaddyModule() caddy.ModuleInfo {
 
 type TorProxy struct {
 	Config Config
+	// Set "testing" to true in tests to skip Tor client's auto start
+	testing bool
 }
 
 func (t TorProxy) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {

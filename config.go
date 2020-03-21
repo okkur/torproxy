@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
+	"os"
 	"os/exec"
 	"strconv"
 	"time"
@@ -11,6 +13,7 @@ import (
 	"github.com/caddyserver/caddy/v2"
 	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
 	"github.com/cretz/bine/tor"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 // TorProxy config
@@ -22,13 +25,14 @@ type Config struct {
 // Tor instance config struct
 type Tor struct {
 	// Socks5 proxy port
+	Host      string
 	Port      int
 	DataDir   string
 	Torrc     string
 	DebugMode bool
 	LogFile   string
 
-	exist           bool
+	debugger        io.Writer
 	instance        *tor.Tor
 	contextCanceler context.CancelFunc
 	onion           *tor.OnionService
@@ -47,6 +51,9 @@ const (
 // ParseTor parses advanced config for Tor client
 func (t *Tor) ParseTor(d *caddyfile.Dispenser) error {
 	switch d.Val() {
+	case "host":
+		t.Host = d.RemainingArgs()[0]
+
 	case "port":
 		value, err := strconv.Atoi(d.RemainingArgs()[0])
 		if err != nil {
@@ -73,12 +80,29 @@ func (t *Tor) ParseTor(d *caddyfile.Dispenser) error {
 	default:
 		return d.ArgErr() // unhandled option for tor
 	}
+
 	return nil
 }
 
 // SetDefaults sets the default values for prometheus config
 // if the fields are empty
 func (t *Tor) SetDefaults() {
+	if t.DebugMode {
+		if t.LogFile != "" {
+			t.debugger = &lumberjack.Logger{
+				Filename:   t.LogFile,
+				MaxSize:    100,
+				MaxAge:     14,
+				MaxBackups: 10,
+			}
+		}
+		t.debugger = os.Stdout
+	}
+
+	if t.Host == "" {
+		t.Host = "127.0.0.1"
+	}
+
 	if t.Port == 0 {
 		t.Port = DefaultOnionServicePort
 	}
@@ -115,8 +139,6 @@ func (t *Tor) IsInstalled() error {
 	if buf.String()[0:3] != "Tor" {
 		return fmt.Errorf("Tor is not installed on you machine.Please follow these instructions to install Tor: https://www.torproject.org/download/")
 	}
-
-	t.exist = true
 
 	return nil
 }
