@@ -32,17 +32,69 @@ use the following options in the config:
 
 **Note: If `host` field isn't provided, Torproxy will start a fresh Tor instance itself.**
 
-Example:
+Caddyfile Example:
 
 ```
-from2.com {
-  torproxy from2.com to2.onion {
+from.com {
+  torproxy from.com to.onion {
     host 172.168.1.1
     port 4200
     datadir /data/dir
     torrc /etc/tor/torrc
     debug_mode true
     logfile /var/logs/stdout
+  }
+}
+```
+
+JSON Example:
+
+```json
+{
+  "apps": {
+    "http": {
+      "servers": {
+        "srv0": {
+          "listen": [":443"],
+          "routes": [
+            {
+              "match": [
+                {
+                  "host": ["from.com"]
+                }
+              ],
+              "handle": [
+                {
+                  "handler": "subroute",
+                  "routes": [
+                    {
+                      "handle": [
+                        {
+                          "Config": {
+                            "Client": {
+                              "DataDir": "/data/dir",
+                              "DebugMode": true,
+                              "Host": "172.168.1.1",
+                              "LogFile": "/var/logs/stdout",
+                              "Port": 4200,
+                              "Torrc": "/etc/tor/torrc"
+                            },
+                            "To": {
+                              "from.com": "http://to.onion"
+                            }
+                          },
+                          "handler": "torproxy"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
   }
 }
 ```
