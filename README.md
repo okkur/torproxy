@@ -9,24 +9,28 @@ An easy way to proxy your http requests through the onion network
 Route your http requests through the onion network without Tor browser
 
 ## Using Torproxy
+Note: The `master` branch is using [Caddy v2](https://caddyserver.com/), if you
+want to use Torproxy with previous caddy versions, check the `caddy-v1` branch.
 
-First you need to install Tor on your machine. Take a look at the [Tor download instructions](https://www.torproject.org/download/)
+If you want Torproxy to start a fresh instance of Tor, you need to install Tor
+on your machine. Take a look at the [Tor download instructions](https://www.torproject.org/download/)
 
-You can get torproxy as a plugin on caddy's [build server](https://caddyserver.com/download).
+You can get torproxy as a plugin on Caddy's `v1` [build server](https://caddyserver.com/download).
 
-Or install torproxy using `go get`.
+Or install torproxy's `v2` version using `go get`:
 ```
 go get go.okkur.org/torproxy/cmd/torproxy
 ```
 
-Create a config file.
+Create a config file like the example below. For more information about the
+available config options, check the [Configuration](/docs/configuration.md) page.
 ```
 example.test {
   torproxy example.test somewhereonthe.onion 
 }
 ```
 
-Now you can run torproxy.
+Now you can run torproxy:
 ```
 torproxy -conf tor.test
 ```
