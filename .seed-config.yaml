@@ -6,7 +6,7 @@ project:
   website: "https://torproxy.okkur.org"
   description: |
     Route your http requests through the onion network without Tor browser
-  version: "v0.2.1"
+  version: "v0.3.0"
 
 vision:
   type: "community"
