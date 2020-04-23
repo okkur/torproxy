@@ -16,6 +16,25 @@ _2017_
 
 -->
 
+# v0.3.1
+
+_2020-04-23_
+
+- [Downloads for v0.3.1](https://torproxy.okkur.org/releases/v0.3.1)
+- [Changelog since v0.3.0](#changes-since-v030)
+- [Documentation for v0.3.1](#documentation-for-v031)
+
+## Documentation for v0.3.1
+
+[Documentation](https://torproxy.okkur.org/docs/)
+
+## Changes since v0.3.0
+
+- Fix null pointer error in start
+- Use Go's internal reverse proxy module instead of Caddy
+
+---
+
 # v0.3.0
 
 _2020-03-23_
