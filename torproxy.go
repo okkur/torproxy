@@ -4,12 +4,9 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 
-	"github.com/caddyserver/caddy/v2"
-	"github.com/caddyserver/caddy/v2/caddyconfig"
-	"github.com/caddyserver/caddy/v2/modules/caddyhttp/headers"
-	"github.com/caddyserver/caddy/v2/modules/caddyhttp/reverseproxy"
 	"golang.org/x/net/proxy"
 )
 
@@ -38,8 +35,10 @@ func (c Config) Proxy(w http.ResponseWriter, r *http.Request) error {
 		return fmt.Errorf("Couldn't connect to socks proxy: %s", err.Error())
 	}
 
-	// Setup the resverse proxy client for the request's endpoint
-	handler := NewHandler(u, dialer)
+	proxy := httputil.NewSingleHostReverseProxy(u)
+	proxy.Transport = &http.Transport{
+		Dial: dialer.Dial,
+	}
 
 	// Create a temporary response writer to save response's body and headers
 	tmpResponse := TorResponse{
@@ -49,9 +48,7 @@ func (c Config) Proxy(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Proxy the request and write the response to the temporary response writer
-	if err := handler.ServeHTTP(&tmpResponse, r, nil); err != nil {
-		return fmt.Errorf("[torproxy]: Coudln't proxy the request to the background onion service. %s", err.Error())
-	}
+	proxy.ServeHTTP(&tmpResponse, r)
 
 	// If the received response is a redirect, proxy the request to the response's Location header
 	// Do this until the final response isn't a redirect response
@@ -95,39 +92,12 @@ func (t *TorResponse) Redirect() error {
 		return fmt.Errorf("[torproxy]: Couldn't parse the URI from Redirect response: %s", err)
 	}
 
-	handler := NewHandler(u, t.dialer)
-
-	if err := handler.ServeHTTP(t, t.request, nil); err != nil {
-		return fmt.Errorf("[torproxy]: Coudln't proxy the request to the background onion service. %s", err.Error())
+	proxy := httputil.NewSingleHostReverseProxy(u)
+	proxy.Transport = &http.Transport{
+		Dial: t.dialer.Dial,
 	}
+
+	proxy.ServeHTTP(t, t.request)
+
 	return nil
-}
-
-func NewHandler(u *url.URL, dialer proxy.Dialer) reverseproxy.Handler {
-	ht := reverseproxy.HTTPTransport{
-		DialTimeout:   caddy.Duration(torProxyTimeout),
-		FallbackDelay: caddy.Duration(torFallbackDelay),
-		KeepAlive: &reverseproxy.KeepAlive{
-			MaxIdleConnsPerHost: torProxyKeepalive,
-		},
-		RoundTripper: &http.Transport{
-			Dial: dialer.Dial,
-		},
-	}
-
-	if u.Scheme == "https" {
-		ht.TLS = new(reverseproxy.TLSConfig)
-	}
-
-	return reverseproxy.Handler{
-		TransportRaw: caddyconfig.JSONModuleObject(ht, "protocol", "http", nil),
-		Upstreams:    reverseproxy.UpstreamPool{{Dial: u.Host}},
-		Headers: &headers.Handler{
-			Request: &headers.HeaderOps{
-				Set: http.Header{
-					"Host": []string{"{http.reverse_proxy.upstream.host}"},
-				},
-			},
-		},
-	}
 }
