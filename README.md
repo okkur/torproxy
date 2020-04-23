@@ -30,9 +30,9 @@ example.test {
 }
 ```
 
-Now you can run torproxy:
+You can run torproxy with Caddyfile config adapter using this command:
 ```
-torproxy -conf tor.test
+torproxy start -config torproxy.config -adapter caddyfile
 ```
 Take a look at our full [documentation](https://torproxy.okkur.org/docs).
 
