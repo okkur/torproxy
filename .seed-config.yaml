@@ -23,7 +23,7 @@ contributionLinks:
   starterIssues: "https://github.com/okkur/torproxy/labels/starter%20issue"
 
 supportLinks:
-  documentation: "/docs"
+  documentation: "https://torproxy.okkur.org/docs"
 
 readme:
   usageExample: |
@@ -48,9 +48,9 @@ readme:
     }
     ```
 
-    Now you can run torproxy:
+    You can run torproxy with Caddyfile config adapter using this command:
     ```
-    torproxy -conf tor.test
+    torproxy start -config torproxy.config -adapter caddyfile
     ```
 
 docs:
