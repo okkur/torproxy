@@ -79,8 +79,7 @@ config_handler:
 
 // CaddyModule returns the Caddy module information.
 func (TorProxy) CaddyModule() caddy.ModuleInfo {
-	t := TorProxy{Config: Config{Client: &Tor{}}}
-
+	t := &TorProxy{Config: Config{Client: &Tor{}}}
 	pool := caddy.NewUsagePool()
 	pool.LoadOrNew("torclient", TorConstructor)
 
